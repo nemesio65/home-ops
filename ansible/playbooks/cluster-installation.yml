@@ -22,6 +22,27 @@
         k3s_server_manifests_urls: []
       when: k3s_check_installed.stat.exists
 
+    - name: Fix DNS for ubuntu
+      block:
+        - name: Stop and disable service which messes with DNS
+          service:
+            name: "systemd-resolved"
+            state: stopped
+            enabled: false
+        - name: Delete link to the systemd-resolved resolv.conf
+          ansible.builtin.file:
+            path: /etc/resolv.conf
+            state: absent
+        - name: Create empty resolv.conf
+          ansible.builtin.file:
+            path: /etc/resolv.conf
+            state: touch
+        - name: Setup nameserver
+          blockinfile: |
+            dest=/etc/resolv.conf
+            content="nameserver 192.168.30.82"
+      when: ansible_facts['distribution'] == 'Ubuntu'
+
     - name: Install Kubernetes
       ansible.builtin.include_role:
         name: xanmanning.k3s
