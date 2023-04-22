@@ -80,6 +80,14 @@ spec:
         path: /mnt/user/Plex_Media/Movies
         mountPath: /movies
 
+      data:
+        enabled: true
+        type: nfs
+        server: 192.168.30.90
+        path: /mnt/user/deluge_data
+        mountPath: /data
+
+
     resources:
       requests:
         cpu: 5m
