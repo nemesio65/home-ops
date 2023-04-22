@@ -1,0 +1,47 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: longhorn
+  namespace: longhorn-system
+spec:
+  releaseName: longhorn
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.longhorn.io
+      chart: longhorn
+      version: 1.4.1
+      sourceRef:
+        kind: HelmRepository
+        name: longhorn-charts
+        namespace: flux-system
+      interval: 5m
+  install:
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+
+    defaultSettings:
+      defaultReplicaCount: 2
+      # backupTarget: ${NFS_BACKUP}
+      # Below requires that nodes used for storage have the label
+      # node.longhorn.io/create-default-disk=true
+      # createDefaultDiskLabeledNodes: true
+      # storageOverProvisioningPercentage: 150
+      # storageMinimalAvailablePercentage: 50
+      # guaranteedEngineManagerCPU: 20
+      # guaranteedReplicaManagerCPU: 20
+      defaultDataPath: /var/lib/longhorn
+      concurrentAutomaticEngineUpgradePerNodeLimit: 3
+      defaultLonghornStaticStorageClass: longhorn
+
+    ingress:
+      enabled: true
+      ingressClassName: nginx
+      host: longhorn.${SECRET_DOMAIN}
+      tls: false
+      tlsSecret: longhorn.bhsnw-com-production-tls
