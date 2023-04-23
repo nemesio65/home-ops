@@ -1,0 +1,92 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: sonarr
+  namespace: downloads
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.4.0
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+
+  values:
+    controller:
+      annotations:
+        reloader.stakater.com/auto: "true"
+
+    image:
+      repository: ghcr.io/onedr0p/sonarr-develop
+      tag: 4.0.0.452@sha256:c6eb356b881e13fe9c8da76e17882624246eeaaf6aee40207d4e66f1c1313378
+
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: "OnRootMismatch"
+      supplementalGroups:
+        - 65539
+
+    env:
+      RADARR__INSTANCE_NAME: Sonarr
+      RADARR__PORT: &port 8989
+      RADARR__APPLICATION_URL: "https://sonarr.bhsnw.com"
+      RADARR__LOG_LEVEL: info
+      #RADARR__API_KEY:
+      #  valueFrom:
+      #    secretKeyRef:
+      #      name: radarr-secret
+      #      key: api_key
+
+    service:
+      main:
+        ports:
+          http:
+            port: *port
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "nginx"
+        annotations:
+          nginx.ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+        hosts:
+          - host: &host "sonarr.bhsnw.com"
+            paths:
+              - path: /
+        tls:
+          - hosts:
+              - *host
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: sonarr-config
+
+      tv:
+        enabled: true
+        type: nfs
+        server: 192.168.30.90
+        path: "/mnt/user/Plex_Media/TV Shows"
+        mountPath: /tv
+
+      data:
+        enabled: true
+        type: nfs
+        server: 192.168.30.90
+        path: /mnt/user/deluge_data
+        mountPath: /data
+
+
+    resources:
+      requests:
+        cpu: 5m
+        memory: 198M
+      limits:
+        memory: 198M
