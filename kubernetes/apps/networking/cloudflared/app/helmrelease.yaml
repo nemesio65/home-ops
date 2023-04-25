@@ -46,7 +46,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: tautulli-config
+        existingClaim: cloudflared-config
         subPath:
           - path: config.yaml
             mountPath: /etc/cloudflared/config.yaml
