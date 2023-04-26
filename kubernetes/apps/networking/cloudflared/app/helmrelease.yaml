@@ -61,8 +61,8 @@ spec:
           secret:
             secretName: &secret cloudflare-tunnel
         subPath:
-          - path: cred.json
-            mountPath: /etc/cloudflared/cred.json
+          - path: credentials.json
+            mountPath: /etc/cloudflared/credentials.json
             readOnly: true
     resources:
       requests:
