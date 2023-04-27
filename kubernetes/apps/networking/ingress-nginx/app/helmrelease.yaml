@@ -33,6 +33,8 @@ spec:
       service:
         annotations:
           metallb.universe.tf/loadBalancerIPs: "${METALLB_INGRESS_ADDR}"
+          external-dns.alpha.kubernetes.io/target: "${SECRET_CLOUDFLARE_TUNNEL_ID}.${SECRET_DOMAIN}"
+          external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
         externalTrafficPolicy: Local
       publishService:
         enabled: true
