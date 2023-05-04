@@ -1,0 +1,85 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ombi
+  namespace: media
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.4.0
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+
+  values:
+    controller:
+      annotations:
+        reloader.stakater.com/auto: "true"
+
+    image:
+      repository: ghcr.io/linuxserver/ombi
+      tag: development
+
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: "OnRootMismatch"
+      supplementalGroups:
+        - 65539
+
+    env:
+      TZ: America/Los_Angeles
+      PORT: &port 3579
+
+    service:
+      main:
+        ports:
+          http:
+            port: *port
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "nginx"
+        annotations:
+          nginx.ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+        hosts:
+          - host: &host "ombi.bhsnw.com"
+            paths:
+              - path: /
+        tls:
+          - hosts:
+              - *host
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: ombi-config
+
+      movies:
+        enabled: true
+        type: nfs
+        server: 192.168.30.90
+        path: /mnt/user/Plex_Media/Movies
+        mountPath: /movies
+
+      data:
+        enabled: true
+        type: nfs
+        server: 192.168.30.90
+        path: /mnt/user/deluge_data
+        mountPath: /data
+
+
+    resources:
+      requests:
+        cpu: 5m
+        memory: 431M
+      limits:
+        memory: 431M
