@@ -24,20 +24,12 @@ spec:
 
     image:
       repository: ghcr.io/linuxserver/ombi
-      tag: development
-
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: "OnRootMismatch"
-      supplementalGroups:
-        - 65539
+      tag: development@sha256:7e0f4ba188c1be7f280aaac136d07ab32ad6fc1919ec39a5d2147aedc9fccb6f
 
     env:
       TZ: America/Los_Angeles
-      PUID: "568"
-      GUID: "568"
+      PUID: "1000"
+      PGID: "1000"
 
     service:
       main:
