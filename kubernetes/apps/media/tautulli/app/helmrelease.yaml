@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: tautulli
+  name: &app tautulli
   namespace: media
 spec:
   interval: 30m
@@ -17,6 +17,8 @@ spec:
         namespace: flux-system
 
   values:
+    global:
+      nameOverride: *app
     image:
       repository: ghcr.io/onedr0p/tautulli
       tag: 2.12.3@sha256:873832cec51b99d5fbcf179bad9a7bbe609518d821eb982dab0b297b8c0cfc6a
