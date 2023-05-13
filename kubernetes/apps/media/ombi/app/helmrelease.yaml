@@ -24,7 +24,7 @@ spec:
 
     image:
       repository: ghcr.io/linuxserver/ombi
-      tag: development@sha256:7e0f4ba188c1be7f280aaac136d07ab32ad6fc1919ec39a5d2147aedc9fccb6f
+      tag: development@sha256:e6cf45620abacd118564c06f625db0227fb94c0202af89e3598eb1fa59070ec6
 
     env:
       TZ: America/Los_Angeles
