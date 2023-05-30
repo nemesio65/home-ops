@@ -9,6 +9,7 @@
     ":enablePreCommit",
     ":automergeDigest",
     ":automergeBranch",
+    ":automergeAll",
     "github>onedr0p/flux-cluster-template//.github/renovate/autoMerge.json5",
     "github>onedr0p/flux-cluster-template//.github/renovate/commitMessage.json5",
     "github>onedr0p/flux-cluster-template//.github/renovate/groups.json5",
