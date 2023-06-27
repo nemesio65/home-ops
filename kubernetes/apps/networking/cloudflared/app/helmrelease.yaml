@@ -37,7 +37,7 @@ spec:
       - --metrics
       - 0.0.0.0:9090
       - run
-      - "$(TUNNEL_ID)"
+      - "${SECRET_CLOUDFLARE_TUNNEL_ID}"
     service:
       main:
         nameOverride: metrics
