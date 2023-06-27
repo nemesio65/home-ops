@@ -5,18 +5,3 @@ originRequest:
   connectTimeout: 30s
 warp-routing:
   enabled: false
-
-ingress:
-  - hostname: radarr.${SECRET_DOMAIN}
-    service: https://radarr.downloads.svc.cluster.local:7878
-    originRequest:
-      noTLSVerify: true
-  - hostname: sonarr.${SECRET_DOMAIN}
-    service: https://sonarr.downloads.svc.cluster.local:8989
-    originRequest:
-      noTLSVerify: true
-  - hostname: tautulli.${SECRET_DOMAIN}
-    service: https://tautulli.media.svc.cluster.local:7878
-    originRequest:
-      noTLSVerify: true
-  - service: http_status:404
