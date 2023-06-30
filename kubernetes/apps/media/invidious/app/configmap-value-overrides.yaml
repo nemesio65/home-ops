@@ -1,0 +1,56 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: value-overrides
+  namespace: media
+data:
+  values.yaml: |-
+    postgresql:
+    image:
+      tag: 14
+    auth:
+      username: invidious
+      password: ${INV_DB_PASS}
+      database: invidious
+    primary:
+      initdb:
+        username: invidious
+        password: ${INV_DB_PASS}
+        scriptsConfigMap: invidious-postgresql-init
+      persistence:
+        size: 1Gi
+      podAnnotations:
+        backup.velero.io/backup-volumes: backup
+        pre.hook.backup.velero.io/command: '["/bin/bash", "-c", "PGPASSWORD=$POSTGRES_PASSWORD pg_dump -U postgres -d $POSTGRES_DB -h 127.0.0.1 > /scratch/backup.sql"]'
+        pre.hook.backup.velero.io/timeout: 3m
+        post.hook.restore.velero.io/command: '["/bin/bash", "-c", "[ -f \"/scratch/backup.sql\" ] && PGPASSWORD=$POSTGRES_PASSWORD psql -U postgres -h 127.0.0.1 -d $POSTGRES_DB -f /scratch/backup.sql && rm -f /scratch/backup.sql;"]'
+      extraVolumes:
+        - name: backup
+          emptyDir:
+            sizeLimit: 1Gi
+      extraVolumeMounts:
+        - name: backup
+          mountPath: /scratch
+      resources:
+        requests:
+          cpu: "10m"
+          memory: 32Mi
+
+    # Adapted from ../config/config.yml
+      config:
+      channel_threads: 1
+      feed_threads: 1
+      db:
+        user: invidious
+        password: ${INV_DB_PASS}
+        host: invidious-postgresql
+        port: 5432
+        dbname: invidious
+      full_refresh: false
+      https_only: true
+      domain: in.fnky.nz
+      external_port: 443
+      banner: ⚠️ Note - This public Invidious instance is sponsored ❤️ by <A HREF='https://geek-cookbook.funkypenguin.co.nz'>Funky Penguin's Geek Cookbook</A>. It's intended to support the published <A HREF='https://geek-cookbook.funkypenguin.co.nz/recipes/invidious/'>Docker Swarm recipes</A>, but may be removed at any time without notice.
+      default_user_preferences:
+      quality: dash
