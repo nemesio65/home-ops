@@ -17,8 +17,8 @@ spec:
     - apiVersion: apps/v1
       kind: Deployment
       name: invidious-invidious
-      namespace: invidious
+      namespace: media
     - apiVersion: apps/v1
       kind: StatefulSet
       name: invidious-postgresql
-      namespace: invidious
+      namespace: media
