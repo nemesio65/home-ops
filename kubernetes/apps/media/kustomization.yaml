@@ -5,3 +5,4 @@ resources:
   - ./namespace.yaml
   - ./tautulli/ks.yaml
   - ./ombi/ks.yaml
+  - ./invidious/ks.yaml
