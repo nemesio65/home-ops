@@ -20,8 +20,7 @@ spec:
     global:
       nameOverride: *app
     image:
-      repository: ghcr.io/onedr0p/tautulli
-      tag: tautulli:2.12.3@sha256:21559c77c872bad4b7067c0df0d4fc213c42435c6466c0a6984ab679c33623e5
+      registry: docker.io/library/tautulli:main
 
     podSecurityContext:
       runAsUser: 568
