@@ -4,5 +4,6 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./tautulli/ks.yaml
-  - ./ombi/ks.yaml
+  #- ./ombi/ks.yaml
+  - ./overseerr/app/ks.yaml
   - ./invidious-server/ks.yaml
