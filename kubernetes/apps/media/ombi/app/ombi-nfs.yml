@@ -19,7 +19,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: ombi-nfs
-  namespace: default
+  namespace: media
 spec:
   accessModes: ["ReadWriteMany"]
   storageClassName: ombi-nfs
