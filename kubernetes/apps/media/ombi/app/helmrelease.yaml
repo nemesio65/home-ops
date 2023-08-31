@@ -54,7 +54,8 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: ombi-config
+        type: nfs
+        server: 192.168.30.9:/mnt/zpool/k3s/ombi/
         mountPath: /config
 
     resources:
