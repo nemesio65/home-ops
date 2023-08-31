@@ -5,5 +5,5 @@ resources:
   - ./namespace.yaml
   - ./tautulli/ks.yaml
   #- ./ombi/ks.yaml
-  - ./overseerr/app/ks.yaml
+  - ./overseerr/ks.yaml
   - ./invidious-server/ks.yaml
