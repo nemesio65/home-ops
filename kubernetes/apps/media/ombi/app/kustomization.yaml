@@ -6,7 +6,7 @@ namespace: media
 resources:
   #- ./externalsecret.yaml
   - ./helmrelease.yaml
-  - ./ombi-pvc.yaml
+  #- ./ombi-pvc.yaml
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
