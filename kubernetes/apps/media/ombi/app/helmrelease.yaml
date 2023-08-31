@@ -55,7 +55,8 @@ spec:
       config:
         enabled: true
         type: nfs
-        server: 192.168.30.9:/mnt/zpool/k3s/ombi/
+        server: 192.168.30.9
+        path: /mnt/zpool/k3s/ombi/
         mountPath: /config
 
     resources:
