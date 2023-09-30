@@ -25,7 +25,7 @@ spec:
 
     image:
       repository: ghcr.io/onedr0p/sonarr-develop
-      tag: 4.0.0.682@sha256:eeb083bc965192a6cf7ed5f0886f4034f6252895390371ee3b6b5ec57d335305
+      tag: 4.0.0.688@sha256:17c928ef28c792bb2a3a0e9a1c2bb18cbdad30a9730c91281c6838f8080d98c6
 
     podSecurityContext:
       runAsUser: 568
