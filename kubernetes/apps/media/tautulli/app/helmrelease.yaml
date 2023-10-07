@@ -21,7 +21,7 @@ spec:
       nameOverride: *app
     image:
       repository: ghcr.io/onedr0p/tautulli
-      tag: 2.13.1@sha256:b01468139fc239e6581086df75419debfca5263163f5b35cc199e7b547e86d7b
+      tag: 2.13.1@sha256:ef402e812ff77c412439ab3195346bf6149b8d5b7a77e728785f361983d0f71c
 
     podSecurityContext:
       runAsUser: 568
