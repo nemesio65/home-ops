@@ -29,7 +29,7 @@ spec:
       replicas: 2
     image:
       repository: cloudflare/cloudflared
-      tag: 2023.8.2-arm64
+      tag: 2023.10.0-arm64
     env:
       NO_AUTOUPDATE: "true"
       TUNNEL_CRED_FILE: /etc/cloudflared/credentials.json
